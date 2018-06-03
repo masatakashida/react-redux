@@ -17,6 +17,8 @@
     "import-glob-loader": "^1.1.0",
     "node-mime": "^1.0.0",
     "node-sass": "^4.9.0",
+    "react": "15.6.1",
+    "react-dom": "15.6.1",
     "sass-loader": "^7.0.2",
     "style-loader": "^0.21.0",
     "webpack": "^4.10.2",
