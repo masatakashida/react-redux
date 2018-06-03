@@ -1,29 +1,59 @@
-const publidDir = payh.join(__dirname, '/public');
+const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const MODE = 'production';
-module.exports = {
-  mode: MODE,
-  entry: [
-    './src/index.js',
-  ],
-  output: {
-    path: publidDir,
-    publicPath: '/',
-    filename: 'bundle.js',
+
+const publidDir = path.join(__dirname, '/public');
+module.exports = [
+  {
+    mode: MODE,
+    entry: [
+      './src/index.js',
+    ],
+    output: {
+      path: publidDir,
+      publicPath: '/',
+      filename: 'bundle.js',
+    },
+    module: {
+      rules: [{
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        query: {
+          presets: ['react', 'es2015'],
+        },
+      }],
+    },
+    resolve: {
+      extensions: ['.js', '.jsx'],
+    },
+    devServer: {
+      historyApiFallback: true,
+      contentBase: publidDir,
+    },
   },
-  module: {
-    rules: [{
-      exclude: /node_modules/,
-      loader: 'babel-loader',
-      query: {
-        presets: ['react', 'es2015'],
-      },
-    }],
+  {
+    entry: {
+      style: './stylesheets/index.scss',
+    },
+    output: {
+      path: publidDir,
+      publicPath: '/',
+      filename: 'bundle.css',
+    },
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' }),
+        },
+        {
+          test: /\.scss$/,
+          loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader!sass-loader' }),
+        },
+      ],
+    },
+    plugins: [
+      new ExtractTextPlugin('bundle.css'),
+    ],
   },
-  resolve: {
-    extensions: ['.js', '.jsx'],
-  },
-  devServer: {
-    historyApiFallback: true,
-    contentBase: publidDir,
-  },
-};
+];
