@@ -18,6 +18,7 @@ class App extends Component {
   handleMouseOut() {
     this.setState({ name: 'Mike' });
   }
+  // setStateでもう一度renderが呼ばれる
 
   render() {
     return (
