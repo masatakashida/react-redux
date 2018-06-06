@@ -15,6 +15,8 @@
     "css-loader": "^0.28.11",
     "eslint": "^4.19.1",
     "import-glob-loader": "^1.1.0",
+    "js-mine": "^1.0.0",
+    "mine": "^0.1.0",
     "node-mime": "^1.0.0",
     "node-sass": "^4.9.0",
     "react": "15.6.1",
