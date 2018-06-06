@@ -12,7 +12,6 @@ class App extends Component {
   }
 
   handleNameChange(e) {
-    console.log(e.target.value);
     this.setState({ name: e.target.value });
   }
 
