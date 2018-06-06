@@ -7,7 +7,7 @@ module.exports = [
   {
     mode: MODE,
     entry: [
-      './src/index.js',
+      './src/index.jsx',
     ],
     output: {
       path: publidDir,

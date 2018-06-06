@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
+// Componentはreactに入っているライブラリ
 
-function App(props) {
-  return (<div>Hello from functional App</div>);
+class App extends Component {
+  render() {
+    return (<div>Hello from functional App</div>);
+  }
 }
 
 export default App;
