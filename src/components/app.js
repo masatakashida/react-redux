@@ -5,3 +5,4 @@ function App(props) {
 }
 
 export default App;
+// 外からインポートできるように
