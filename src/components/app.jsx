@@ -11,9 +11,22 @@ class App extends Component {
     };
   }
 
+  handleMouseOver() {
+    this.setState({ name: 'Bob' });
+  }
+
+  handleMouseOut() {
+    this.setState({ name: 'Mike' });
+  }
+
   render() {
     return (
-      <div>
+      <div
+        onMouseOver={() => this.handleMouseOver()}
+        onFocus={() => undefined}
+        onMouseOut={() => this.handleMouseOut()}
+        onBlur={() => undefined}
+      >
         <Greeting name={this.state.name} />
       </div>
     );
