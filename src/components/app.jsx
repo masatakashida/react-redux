@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 // Componentはreactに入っているライブラリ
 
+import Greeting from './greeting';
+
 class App extends Component {
   render() {
-    return (<div>Hello from functional App</div>);
+    return (<Greeting name="jhon" />);
   }
 }
 
