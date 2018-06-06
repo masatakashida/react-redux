@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 // Componentはreactに入っているライブラリ
+import SearchForm from './SearchForm';
 
 class App extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class App extends Component {
     return (
       <div>
         <h1>緯度経度検索</h1>
+        <SearchForm />
       </div>
     );
   }
