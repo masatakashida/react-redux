@@ -5,7 +5,12 @@ import Greeting from './greeting';
 
 class App extends Component {
   render() {
-    return (<Greeting name="jhon" />);
+    return (
+      <div>
+        <Greeting name="jhon" />
+        <Greeting name="Bob" />
+      </div>
+    );
   }
 }
 
