@@ -11,8 +11,8 @@ class App extends Component {
     };
   }
 
-  handleNameChange(e) {
-    this.setState({ name: e.target.value });
+  handleNameChange(name) {
+    this.setState({ name });
   }
 
   render() {
@@ -21,8 +21,9 @@ class App extends Component {
         <input
           type="text"
           value={this.state.name}
-          onChange={e => this.handleNameChange(e)}
+          onChange={e => this.handleNameChange(e.target.value)}
         />
+        <button onClick={() => this.handleNameChange('Bob')}>I am Bob</button>
         <Greeting name={this.state.name} />
       </div>
     );
