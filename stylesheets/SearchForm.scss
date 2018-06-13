@@ -1,0 +1,21 @@
+.search-form {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+$search-form-font-size: 24px;
+//コンパイルすると全て一つのシートになってしまう
+
+.place-input {
+  font-size: $search-form-font-size;
+  padding: 5px 3px 6px;
+}
+
+.submit-button {
+  // かかっているのなしに指定する
+  -webkit-appearance: none;
+  font-size: $search-form-font-size;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}

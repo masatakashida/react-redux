@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import SearchForm from './SearchForm';
 import GeocodeResult from './GeocodeResult';
 import Map from './Map';
+import HotelsTable from './HotelsTable';
 
 import { geocode } from '../domain/Geocoder';
 
@@ -14,6 +15,10 @@ class App extends Component {
         lat: 35.6585805,
         lng: 139.7454329,
       },
+      hotels: [
+        { id: 111, name: 'ホテルオークラ', url: 'http://google.com' },
+        { id: 222, name: 'アパホテル', url: 'https://yahoo.jp' },
+      ],
     };
   }
 
@@ -51,14 +56,20 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <h1>緯度経度検索</h1>
+      <div className="app">
+        <h1 className="app-title">ホテル検索</h1>
         <SearchForm onSubmit={place => this.handlePlaceSubmit(place)} />
-        <GeocodeResult
-          address={this.state.address}
-          location={this.state.location}
-        />
-        <Map location={this.state.location} />
+        <div className="result-area">
+          <Map location={this.state.location} />
+          <div className="result-right">
+            <GeocodeResult
+              address={this.state.address}
+              location={this.state.location}
+            />
+            <h2>ホテル検索結果</h2>
+            <HotelsTable hotels={this.state.hotels} />
+          </div>
+        </div>
       </div>
     );
   }
