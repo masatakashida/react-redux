@@ -13,6 +13,15 @@ export const searchHotelByLocation = (location) => {
   };
   return Rakuten.Travel.simpleHotelSearch(params)
     .then((result) => {
-      console.log(result);
+      return result.data.hotels.map((hotel) => {
+        console.log(hotel);
+        const basicInfo = hotel.hotel[0].hotelBasicInfo;
+        return {
+          id: basicInfo.hotelNo,
+          name: basicInfo.hotelName,
+          url: basicInfo.hotelInformationUrl,
+          thumbUrl: basicInfo.hotelThumbnailUrl,
+        };
+      })
     });
 };
