@@ -18,3 +18,5 @@ export const geocode = place =>
       return { status, address, location };
     });
 export const reverseGeocode = () => null;
+
+// ここ動いていない

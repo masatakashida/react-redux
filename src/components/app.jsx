@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+const GEOCODE_ENDPOINT = 'https://maps.googleapis.com/maps/api/geocode/json';
 
 import SearchForm from './SearchForm';
 import GeocodeResult from './GeocodeResult';
 import Map from './Map';
 import HotelsTable from './HotelsTable';
 
-import { geocode } from '../domain/Geocoder';
+//import { geocode } from '../domain/Geocoder';
 import { searchHotelByLocation } from '../domain/HotelRepository';
 
 class App extends Component {
@@ -16,10 +18,6 @@ class App extends Component {
         lat: 35.6585805,
         lng: 139.7454329,
       },
-      hotels: [
-        { id: 111, name: 'ホテルオークラ', url: 'http://google.com' },
-        { id: 222, name: 'アパホテル', url: 'https://yahoo.jp' },
-      ],
     };
   }
 
@@ -34,14 +32,25 @@ class App extends Component {
   }
 
   handlePlaceSubmit(place) {
-    geocode(place)
-      .then(({ status, address, location }) => {
-        switch (status) {
+    axios
+      .get(GEOCODE_ENDPOINT, { params: { address: place } })
+      .then((results) => {
+        const data = results.data;
+        console.log(results);
+        const result = data.results[0];
+        switch (data.status) {
           case 'OK': {
-            this.setState({ address, location });
-            return searchHotelByLocation(location);
+            console.log('OK');
+            console.log(result.formatted_address);
+            console.log(result.geometry.location);
+            this.setState({
+              address: result.formatted_address, 
+              location: result.geometry.location,
+            });
+            return searchHotelByLocation(result.geometry.location);
           }
           case 'ZERO_RESULTS': {
+            console.log('ZERO_RESULTS');
             this.setErrorMessage('結果が見つかりませんでした');
             break;
           }
