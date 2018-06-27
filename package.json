@@ -18,6 +18,7 @@
     "geolib": "^2.0.24",
     "import-glob-loader": "^1.1.0",
     "js-mine": "^1.0.0",
+    "lodash": "^4.17.10",
     "mine": "^0.1.0",
     "node-mime": "^1.0.0",
     "node-sass": "^4.9.0",

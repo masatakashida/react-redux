@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
+
 import axios from 'axios';
 const GEOCODE_ENDPOINT = 'https://maps.googleapis.com/maps/api/geocode/json';
 
@@ -10,6 +12,8 @@ import HotelsTable from './HotelsTable';
 //import { geocode } from '../domain/Geocoder';
 import { searchHotelByLocation } from '../domain/HotelRepository';
 
+const sortedHotels = (hotels, sortKey) => _.sortBy(hotels, h => h[sortKey]);
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -18,6 +22,7 @@ class App extends Component {
         lat: 35.6585805,
         lng: 139.7454329,
       },
+      sortKey: 'price',
     };
   }
 
@@ -61,7 +66,7 @@ class App extends Component {
         return [];
       })
       .then((hotels) => {
-        this.setState({ hotels });
+        this.setState({ hotels: sortedHotels(hotels, this.state.sortKey ) });
       })
       .catch(() => {
         this.setErrorMessage('通信に失敗しました');
