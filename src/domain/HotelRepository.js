@@ -16,11 +16,13 @@ export const searchHotelByLocation = (location) => {
       return result.data.hotels.map((hotel) => {
         console.log(hotel);
         const basicInfo = hotel.hotel[0].hotelBasicInfo;
+        const price = basicInfo.hotelMinCharge
         return {
           id: basicInfo.hotelNo,
           name: basicInfo.hotelName,
           url: basicInfo.hotelInformationUrl,
           thumbUrl: basicInfo.hotelThumbnailUrl,
+          price: price ? `${price}円` : '空室なし',
         };
       })
     });
