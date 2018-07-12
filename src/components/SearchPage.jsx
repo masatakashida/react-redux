@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import axios from 'axios';
@@ -37,6 +38,7 @@ class SearchPage extends Component {
   }
 
   handlePlaceSubmit(place) {
+    this.props.history.push(`/?query=${place}`);
     axios
       .get(GEOCODE_ENDPOINT, { params: { address: place } })
       .then((results) => {
@@ -104,5 +106,9 @@ class SearchPage extends Component {
     );
   }
 }
+
+SearchPage.PropTypes = {
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+};
 
 export default SearchPage;
