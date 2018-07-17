@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import queryString from 'query-string';
 
 import axios from 'axios';
 const GEOCODE_ENDPOINT = 'https://maps.googleapis.com/maps/api/geocode/json';
@@ -27,6 +28,14 @@ class SearchPage extends Component {
     };
   }
 
+  componentDidMount() {
+    const params = queryString.parse(this.props.location.search);
+    const place = params.place;
+    if (place && place.length > 0) {
+      this.startSearch(place);
+    }
+  }
+
   setErrorMessage(message) {
     this.setState({
       address: message,
@@ -38,41 +47,45 @@ class SearchPage extends Component {
   }
 
   handlePlaceSubmit(place) {
-    this.props.history.push(`/?query=${place}`);
+    this.props.history.push(`/?place=${place}`);
+    this.startSearch(place);
+  }
+
+  startSearch(place) {
     axios
-      .get(GEOCODE_ENDPOINT, { params: { address: place } })
-      .then((results) => {
-        const data = results.data;
-        console.log(results);
-        const result = data.results[0];
-        switch (data.status) {
-          case 'OK': {
-            console.log('OK');
-            console.log(result.formatted_address);
-            console.log(result.geometry.location);
-            this.setState({
-              address: result.formatted_address, 
-              location: result.geometry.location,
-            });
-            return searchHotelByLocation(result.geometry.location);
-          }
-          case 'ZERO_RESULTS': {
-            console.log('ZERO_RESULTS');
-            this.setErrorMessage('結果が見つかりませんでした');
-            break;
-          }
-          default: {
-            this.setErrorMessage('エラーが発生しました');
-          }
+    .get(GEOCODE_ENDPOINT, { params: { address: place } })
+    .then((results) => {
+      const data = results.data;
+      console.log(results);
+      const result = data.results[0];
+      switch (data.status) {
+        case 'OK': {
+          console.log('OK');
+          console.log(result.formatted_address);
+          console.log(result.geometry.location);
+          this.setState({
+            address: result.formatted_address, 
+            location: result.geometry.location,
+          });
+          return searchHotelByLocation(result.geometry.location);
         }
-        return [];
-      })
-      .then((hotels) => {
-        this.setState({ hotels: sortedHotels(hotels, this.state.sortKey ) });
-      })
-      .catch(() => {
-        this.setErrorMessage('通信に失敗しました');
-      });
+        case 'ZERO_RESULTS': {
+          console.log('ZERO_RESULTS');
+          this.setErrorMessage('結果が見つかりませんでした');
+          break;
+        }
+        default: {
+          this.setErrorMessage('エラーが発生しました');
+        }
+      }
+      return [];
+    })
+    .then((hotels) => {
+      this.setState({ hotels: sortedHotels(hotels, this.state.sortKey ) });
+    })
+    .catch(() => {
+      this.setErrorMessage('通信に失敗しました');
+    });
   }
 
   handleSortKeyChange(sortKey) {
@@ -109,6 +122,7 @@ class SearchPage extends Component {
 
 SearchPage.PropTypes = {
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+  location: PropTypes.shape({ search: PropTypes.func }).isRequired,
 };
 
 export default SearchPage;
